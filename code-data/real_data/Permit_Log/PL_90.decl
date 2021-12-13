@@ -1,0 +1,88 @@
+activity End trip
+activity Start trip
+activity Permit SUBMITTED by EMPLOYEE
+activity Permit FINAL_APPROVED by SUPERVISOR
+activity Payment Handled
+activity Request Payment
+activity Permit APPROVED by ADMINISTRATION
+activity Declaration SUBMITTED by EMPLOYEE
+activity Declaration FINAL_APPROVED by SUPERVISOR
+activity Declaration APPROVED by ADMINISTRATION
+activity Permit APPROVED by BUDGET OWNER
+activity Declaration APPROVED by BUDGET OWNER
+activity Send Reminder
+activity Declaration REJECTED by EMPLOYEE
+activity Request For Payment SUBMITTED by EMPLOYEE
+activity Request For Payment FINAL_APPROVED by SUPERVISOR
+activity Declaration REJECTED by ADMINISTRATION
+activity Request For Payment APPROVED by ADMINISTRATION
+activity Permit APPROVED by SUPERVISOR
+activity Permit FINAL_APPROVED by DIRECTOR
+activity Permit APPROVED by PRE_APPROVER
+activity Declaration APPROVED by PRE_APPROVER
+activity Request For Payment APPROVED by BUDGET OWNER
+activity Permit REJECTED by EMPLOYEE
+activity Declaration APPROVED by SUPERVISOR
+activity Declaration FINAL_APPROVED by DIRECTOR
+activity Request For Payment REJECTED by EMPLOYEE
+activity Request For Payment REJECTED by ADMINISTRATION
+activity Permit REJECTED by ADMINISTRATION
+activity Permit REJECTED by SUPERVISOR
+activity Request For Payment APPROVED by PRE_APPROVER
+activity Declaration REJECTED by SUPERVISOR
+activity Declaration REJECTED by MISSING
+activity Permit REJECTED by MISSING
+activity Declaration REJECTED by PRE_APPROVER
+activity Declaration SAVED by EMPLOYEE
+activity Permit REJECTED by BUDGET OWNER
+activity Declaration REJECTED by BUDGET OWNER
+activity Request For Payment APPROVED by SUPERVISOR
+activity Request For Payment FINAL_APPROVED by DIRECTOR
+activity Permit REJECTED by PRE_APPROVER
+activity Request For Payment REJECTED by SUPERVISOR
+activity Request For Payment SAVED by EMPLOYEE
+activity Permit SAVED by EMPLOYEE
+activity Request For Payment REJECTED by PRE_APPROVER
+activity Request For Payment REJECTED by MISSING
+activity Request For Payment REJECTED by BUDGET OWNER
+activity Declaration REJECTED by DIRECTOR
+activity Permit REJECTED by DIRECTOR
+activity Permit FOR_APPROVAL by SUPERVISOR
+activity Permit FOR_APPROVAL by ADMINISTRATION
+Exactly1[End trip] | |
+Exactly1[Start trip] | |
+Absence[Permit FOR_APPROVAL by SUPERVISOR] | |
+Absence[Permit FOR_APPROVAL by ADMINISTRATION] | |
+Absence[Permit REJECTED by DIRECTOR] | |
+Absence[Declaration REJECTED by DIRECTOR] | |
+Absence[Request For Payment REJECTED by BUDGET OWNER] | |
+Absence[Request For Payment REJECTED by MISSING] | |
+Absence[Request For Payment REJECTED by PRE_APPROVER] | |
+Absence[Request For Payment REJECTED by SUPERVISOR] | |
+Absence[Request For Payment SAVED by EMPLOYEE] | |
+Absence[Permit SAVED by EMPLOYEE] | |
+Absence[Permit REJECTED by PRE_APPROVER] | |
+Absence[Request For Payment APPROVED by SUPERVISOR] | |
+Absence[Request For Payment FINAL_APPROVED by DIRECTOR] | |
+Absence[Declaration REJECTED by BUDGET OWNER] | |
+Absence[Permit REJECTED by BUDGET OWNER] | |
+Absence[Declaration SAVED by EMPLOYEE] | |
+Absence[Declaration REJECTED by PRE_APPROVER] | |
+Absence[Permit REJECTED by MISSING] | |
+Absence[Declaration REJECTED by MISSING] | |
+Absence[Declaration REJECTED by SUPERVISOR] | |
+Absence[Request For Payment APPROVED by PRE_APPROVER] | |
+Absence[Permit REJECTED by SUPERVISOR] | |
+Absence[Permit REJECTED by ADMINISTRATION] | |
+Absence[Request For Payment REJECTED by ADMINISTRATION] | |
+Absence[Request For Payment REJECTED by EMPLOYEE] | |
+Absence[Declaration FINAL_APPROVED by DIRECTOR] | |
+Absence[Declaration APPROVED by SUPERVISOR] | |
+Absence2[Declaration APPROVED by ADMINISTRATION] | |
+Exactly1[Permit SUBMITTED by EMPLOYEE] | |
+Absence[Permit REJECTED by EMPLOYEE] | |
+Absence[Request For Payment APPROVED by BUDGET OWNER] | |
+Absence[Declaration APPROVED by PRE_APPROVER] | |
+Absence[Permit APPROVED by PRE_APPROVER] | |
+Absence[Permit FINAL_APPROVED by DIRECTOR] | |
+Absence[Permit APPROVED by SUPERVISOR] | |
