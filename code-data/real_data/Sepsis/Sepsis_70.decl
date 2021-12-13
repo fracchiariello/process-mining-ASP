@@ -1,0 +1,51 @@
+activity ER Registration
+activity ER Triage
+activity ER Sepsis Triage
+activity Leucocytes
+activity CRP
+activity LacticAcid
+activity IV Antibiotics
+activity Admission NC
+activity IV Liquid
+activity Release A
+activity Return ER
+activity Admission IC
+activity Release B
+activity Release C
+activity Release D
+activity Release E
+Exactly1[ER Registration] | |
+Exactly1[ER Sepsis Triage] | |
+Exactly1[ER Triage] | |
+Absence[Release E] | |
+Alternate Succession[ER Registration, ER Sepsis Triage] | | |
+Absence[Release D] | |
+Absence[Release C] | |
+Alternate Response[ER Registration, Leucocytes] | | |
+Alternate Response[ER Registration, CRP] | | |
+Init[ER Registration] | |
+Absence[Release B] | |
+Alternate Response[ER Triage, Leucocytes] | | |
+Alternate Response[ER Triage, CRP] | | |
+Chain Succession[ER Registration, ER Triage] | | |
+Alternate Response[ER Sepsis Triage, Leucocytes] | | |
+Alternate Response[ER Sepsis Triage, CRP] | | |
+Absence[Admission IC] | |
+Chain Succession[ER Triage, ER Sepsis Triage] | | |
+Co-Existence[LacticAcid, Leucocytes] | | |
+Alternate Succession[ER Sepsis Triage, IV Antibiotics] | | |
+Exactly1[IV Antibiotics] | |
+Succession[ER Sepsis Triage, Leucocytes] | | |
+Alternate Succession[ER Registration, IV Antibiotics] | | |
+Succession[ER Sepsis Triage, CRP] | | |
+Alternate Succession[ER Triage, IV Antibiotics] | | |
+Alternate Response[ER Registration, Admission NC] | | |
+Existence[Admission NC] | |
+Alternate Response[ER Triage, Admission NC] | | |
+Alternate Response[ER Sepsis Triage, Admission NC] | | |
+Co-Existence[Admission NC, CRP] | | |
+Absence[Return ER] | |
+Exactly1[IV Liquid] | |
+Alternate Response[ER Sepsis Triage, LacticAcid] | | |
+Alternate Succession[ER Registration, IV Liquid] | | |
+Absence2[Admission NC] | |
