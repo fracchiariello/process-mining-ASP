@@ -1,0 +1,73 @@
+activity Request For Payment SUBMITTED by EMPLOYEE
+activity Request Payment
+activity Payment Handled
+activity Request For Payment FINAL_APPROVED by SUPERVISOR
+activity Permit SUBMITTED by EMPLOYEE
+activity Request For Payment APPROVED by ADMINISTRATION
+activity Permit APPROVED by ADMINISTRATION
+activity Permit FINAL_APPROVED by SUPERVISOR
+activity Request For Payment APPROVED by BUDGET OWNER
+activity Permit APPROVED by BUDGET OWNER
+activity Permit FINAL_APPROVED by DIRECTOR
+activity Permit APPROVED by SUPERVISOR
+activity Request For Payment REJECTED by EMPLOYEE
+activity Request For Payment REJECTED by ADMINISTRATION
+activity Request For Payment APPROVED by PRE_APPROVER
+activity Permit APPROVED by PRE_APPROVER
+activity Permit REJECTED by EMPLOYEE
+activity Request For Payment APPROVED by SUPERVISOR
+activity Request For Payment FINAL_APPROVED by DIRECTOR
+activity Permit REJECTED by SUPERVISOR
+activity Request For Payment SAVED by EMPLOYEE
+activity Request For Payment REJECTED by SUPERVISOR
+activity Permit REJECTED by MISSING
+activity Request For Payment REJECTED by PRE_APPROVER
+activity Permit REJECTED by ADMINISTRATION
+activity Permit REJECTED by BUDGET OWNER
+activity Permit REJECTED by PRE_APPROVER
+activity Request For Payment REJECTED by MISSING
+activity Request For Payment REJECTED by BUDGET OWNER
+Absence[Request For Payment REJECTED by BUDGET OWNER] | |
+Absence[Request For Payment REJECTED by MISSING] | |
+Absence[Permit REJECTED by PRE_APPROVER] | |
+Absence[Permit REJECTED by BUDGET OWNER] | |
+Absence[Permit REJECTED by ADMINISTRATION] | |
+Absence[Request For Payment REJECTED by PRE_APPROVER] | |
+Absence[Permit REJECTED by MISSING] | |
+Absence[Request For Payment REJECTED by SUPERVISOR] | |
+Absence[Request For Payment SAVED by EMPLOYEE] | |
+Absence[Permit REJECTED by SUPERVISOR] | |
+Absence[Request For Payment APPROVED by SUPERVISOR] | |
+Absence[Request For Payment FINAL_APPROVED by DIRECTOR] | |
+Absence[Permit REJECTED by EMPLOYEE] | |
+Exactly1[Request Payment] | |
+Exactly1[Payment Handled] | |
+Chain Succession[Request Payment, Payment Handled] | | |
+Exactly1[Request For Payment FINAL_APPROVED by SUPERVISOR] | |
+Alternate Succession[Request For Payment FINAL_APPROVED by SUPERVISOR, Payment Handled] | | |
+Absence[Permit APPROVED by PRE_APPROVER] | |
+Absence[Request For Payment APPROVED by PRE_APPROVER] | |
+Chain Succession[Request For Payment FINAL_APPROVED by SUPERVISOR, Request Payment] | | |
+Exactly1[Request For Payment SUBMITTED by EMPLOYEE] | |
+Absence[Request For Payment REJECTED by ADMINISTRATION] | |
+Init[Permit SUBMITTED by EMPLOYEE] | |
+Absence[Request For Payment REJECTED by EMPLOYEE] | |
+Alternate Succession[Request For Payment SUBMITTED by EMPLOYEE, Request Payment] | | |
+Alternate Succession[Request For Payment SUBMITTED by EMPLOYEE, Payment Handled] | | |
+Alternate Succession[Request For Payment SUBMITTED by EMPLOYEE, Request For Payment FINAL_APPROVED by SUPERVISOR] | | |
+Exactly1[Permit SUBMITTED by EMPLOYEE] | |
+Absence[Permit FINAL_APPROVED by DIRECTOR] | |
+Absence[Permit APPROVED by SUPERVISOR] | |
+Alternate Succession[Permit SUBMITTED by EMPLOYEE, Request Payment] | | |
+Alternate Succession[Permit SUBMITTED by EMPLOYEE, Payment Handled] | | |
+Exactly1[Request For Payment APPROVED by ADMINISTRATION] | |
+Alternate Succession[Request For Payment APPROVED by ADMINISTRATION, Payment Handled] | | |
+Alternate Succession[Request For Payment APPROVED by ADMINISTRATION, Request Payment] | | |
+Alternate Succession[Permit SUBMITTED by EMPLOYEE, Request For Payment FINAL_APPROVED by SUPERVISOR] | | |
+Alternate Succession[Request For Payment APPROVED by ADMINISTRATION, Request For Payment FINAL_APPROVED by SUPERVISOR] | | |
+Alternate Succession[Permit SUBMITTED by EMPLOYEE, Request For Payment SUBMITTED by EMPLOYEE] | | |
+Chain Succession[Request For Payment SUBMITTED by EMPLOYEE, Request For Payment APPROVED by ADMINISTRATION] | | |
+Chain Succession[Permit SUBMITTED by EMPLOYEE, Permit APPROVED by ADMINISTRATION] | | |
+Exactly1[Permit APPROVED by ADMINISTRATION] | |
+Absence[Permit APPROVED by BUDGET OWNER] | |
+Exactly1[Permit FINAL_APPROVED by SUPERVISOR] | |

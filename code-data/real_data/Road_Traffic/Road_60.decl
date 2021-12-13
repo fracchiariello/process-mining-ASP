@@ -1,0 +1,24 @@
+activity Create Fine
+activity Send Fine
+activity Insert Fine Notification
+activity Add penalty
+activity Payment
+activity Send for Credit Collection
+activity Insert Date Appeal to Prefecture
+activity Send Appeal to Prefecture
+activity Receive Result Appeal from Prefecture
+activity Notify Result Appeal to Offender
+activity Appeal to Judge
+Absence2[Insert Fine Notification] | |
+Init[Create Fine] | |
+Exactly1[Create Fine] | |
+Absence2[Add penalty] | |
+Absence[Appeal to Judge] | |
+Absence[Notify Result Appeal to Offender] | |
+Absence[Receive Result Appeal from Prefecture] | |
+Absence[Send Appeal to Prefecture] | |
+Absence[Insert Date Appeal to Prefecture] | |
+Absence2[Payment] | |
+Exactly1[Send Fine] | |
+Chain Succession[Create Fine, Send Fine] | | |
+Absence[Send for Credit Collection] | |

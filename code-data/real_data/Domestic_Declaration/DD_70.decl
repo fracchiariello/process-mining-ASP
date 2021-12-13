@@ -1,0 +1,46 @@
+activity Declaration SUBMITTED by EMPLOYEE
+activity Declaration FINAL_APPROVED by SUPERVISOR
+activity Payment Handled
+activity Request Payment
+activity Declaration APPROVED by ADMINISTRATION
+activity Declaration APPROVED by BUDGET OWNER
+activity Declaration REJECTED by EMPLOYEE
+activity Declaration REJECTED by ADMINISTRATION
+activity Declaration APPROVED by PRE_APPROVER
+activity Declaration REJECTED by SUPERVISOR
+activity Declaration SAVED by EMPLOYEE
+activity Declaration REJECTED by MISSING
+activity Declaration REJECTED by PRE_APPROVER
+activity Declaration REJECTED by BUDGET OWNER
+activity Declaration FOR_APPROVAL by ADMINISTRATION
+activity Declaration FOR_APPROVAL by PRE_APPROVER
+activity Declaration FOR_APPROVAL by SUPERVISOR
+Absence[Declaration FOR_APPROVAL by PRE_APPROVER] | |
+Absence[Declaration FOR_APPROVAL by SUPERVISOR] | |
+Absence[Declaration FOR_APPROVAL by ADMINISTRATION] | |
+Absence[Declaration REJECTED by BUDGET OWNER] | |
+Absence[Declaration REJECTED by PRE_APPROVER] | |
+Absence[Declaration REJECTED by MISSING] | |
+Absence[Declaration SAVED by EMPLOYEE] | |
+Init[Declaration SUBMITTED by EMPLOYEE] | |
+Absence[Declaration REJECTED by SUPERVISOR] | |
+Exactly1[Payment Handled] | |
+Exactly1[Request Payment] | |
+Chain Succession[Request Payment, Payment Handled] | | |
+Exactly1[Declaration FINAL_APPROVED by SUPERVISOR] | |
+Alternate Succession[Declaration FINAL_APPROVED by SUPERVISOR, Payment Handled] | | |
+Chain Succession[Declaration FINAL_APPROVED by SUPERVISOR, Request Payment] | | |
+Absence[Declaration APPROVED by PRE_APPROVER] | |
+Absence[Declaration REJECTED by ADMINISTRATION] | |
+Exactly1[Declaration SUBMITTED by EMPLOYEE] | |
+Absence[Declaration REJECTED by EMPLOYEE] | |
+Alternate Succession[Declaration SUBMITTED by EMPLOYEE, Declaration FINAL_APPROVED by SUPERVISOR] | | |
+Alternate Succession[Declaration SUBMITTED by EMPLOYEE, Payment Handled] | | |
+Alternate Succession[Declaration SUBMITTED by EMPLOYEE, Request Payment] | | |
+Chain Precedence[Declaration SUBMITTED by EMPLOYEE, Declaration APPROVED by ADMINISTRATION] | | |
+Succession[Declaration SUBMITTED by EMPLOYEE, Declaration APPROVED by ADMINISTRATION] | | |
+Exactly1[Declaration APPROVED by ADMINISTRATION] | |
+Alternate Succession[Declaration APPROVED by ADMINISTRATION, Payment Handled] | | |
+Alternate Succession[Declaration APPROVED by ADMINISTRATION, Declaration FINAL_APPROVED by SUPERVISOR] | | |
+Alternate Succession[Declaration APPROVED by ADMINISTRATION, Request Payment] | | |
+Absence[Declaration APPROVED by BUDGET OWNER] | |

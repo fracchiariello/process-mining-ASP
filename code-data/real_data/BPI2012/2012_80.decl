@@ -1,0 +1,42 @@
+activity A_SUBMITTED
+activity A_PARTLYSUBMITTED
+activity A_DECLINED
+activity A_PREACCEPTED
+activity W_Completeren aanvraag
+activity A_ACCEPTED
+activity O_SENT
+activity O_SELECTED
+activity A_FINALIZED
+activity O_CREATED
+activity W_Nabellen offertes
+activity W_Afhandelen leads
+activity O_SENT_BACK
+activity W_Valideren aanvraag
+activity A_CANCELLED
+activity O_CANCELLED
+activity A_ACTIVATED
+activity A_REGISTERED
+activity A_APPROVED
+activity O_ACCEPTED
+activity W_Nabellen incomplete dossiers
+activity O_DECLINED
+activity W_Beoordelen fraude
+Chain Succession[A_SUBMITTED, A_PARTLYSUBMITTED] | | |
+Exactly1[A_PARTLYSUBMITTED] | |
+Exactly1[A_SUBMITTED] | |
+Absence2[A_FINALIZED] | |
+Absence2[A_ACCEPTED] | |
+Absence2[A_DECLINED] | |
+Absence2[A_PREACCEPTED] | |
+Init[A_SUBMITTED] | |
+Absence[W_Beoordelen fraude] | |
+Absence2[W_Afhandelen leads] | |
+Absence[O_DECLINED] | |
+Absence2[O_SELECTED] | |
+Absence2[O_SENT] | |
+Absence2[O_CREATED] | |
+Absence[W_Nabellen incomplete dossiers] | |
+Absence[O_ACCEPTED] | |
+Absence[A_REGISTERED] | |
+Absence[A_ACTIVATED] | |
+Absence[A_APPROVED] | |

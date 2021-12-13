@@ -1,0 +1,110 @@
+activity End trip
+activity Start trip
+activity Declaration SUBMITTED by EMPLOYEE
+activity Payment Handled
+activity Request Payment
+activity Permit SUBMITTED by EMPLOYEE
+activity Declaration FINAL_APPROVED by SUPERVISOR
+activity Permit FINAL_APPROVED by SUPERVISOR
+activity Declaration APPROVED by ADMINISTRATION
+activity Permit APPROVED by ADMINISTRATION
+activity Declaration APPROVED by BUDGET OWNER
+activity Permit APPROVED by BUDGET OWNER
+activity Declaration REJECTED by EMPLOYEE
+activity Declaration REJECTED by ADMINISTRATION
+activity Permit FINAL_APPROVED by DIRECTOR
+activity Permit APPROVED by SUPERVISOR
+activity Declaration APPROVED by PRE_APPROVER
+activity Permit APPROVED by PRE_APPROVER
+activity Send Reminder
+activity Declaration APPROVED by SUPERVISOR
+activity Declaration FINAL_APPROVED by DIRECTOR
+activity Permit REJECTED by EMPLOYEE
+activity Declaration REJECTED by SUPERVISOR
+activity Declaration REJECTED by MISSING
+activity Permit REJECTED by SUPERVISOR
+activity Declaration REJECTED by PRE_APPROVER
+activity Permit REJECTED by ADMINISTRATION
+activity Declaration SAVED by EMPLOYEE
+activity Permit REJECTED by MISSING
+activity Declaration REJECTED by BUDGET OWNER
+activity Permit REJECTED by BUDGET OWNER
+activity Permit REJECTED by PRE_APPROVER
+activity Declaration REJECTED by DIRECTOR
+activity Permit REJECTED by DIRECTOR
+Exactly1[End trip] | |
+Exactly1[Start trip] | |
+Absence[Permit REJECTED by DIRECTOR] | |
+Absence[Declaration REJECTED by DIRECTOR] | |
+Absence[Permit REJECTED by PRE_APPROVER] | |
+Absence[Permit REJECTED by BUDGET OWNER] | |
+Absence[Declaration REJECTED by BUDGET OWNER] | |
+Absence[Permit REJECTED by MISSING] | |
+Absence[Declaration SAVED by EMPLOYEE] | |
+Absence[Permit REJECTED by ADMINISTRATION] | |
+Absence[Declaration REJECTED by PRE_APPROVER] | |
+Absence[Permit REJECTED by SUPERVISOR] | |
+Absence[Declaration REJECTED by MISSING] | |
+Absence[Declaration REJECTED by SUPERVISOR] | |
+Absence[Permit REJECTED by EMPLOYEE] | |
+Absence[Declaration FINAL_APPROVED by DIRECTOR] | |
+Absence[Declaration APPROVED by SUPERVISOR] | |
+Exactly1[Payment Handled] | |
+Exactly1[Request Payment] | |
+Chain Succession[Request Payment, Payment Handled] | | |
+Absence[Send Reminder] | |
+Absence[Permit APPROVED by PRE_APPROVER] | |
+Absence[Declaration APPROVED by PRE_APPROVER] | |
+Exactly1[Declaration FINAL_APPROVED by SUPERVISOR] | |
+Alternate Succession[Declaration FINAL_APPROVED by SUPERVISOR, Payment Handled] | | |
+Alternate Response[Start trip, Declaration SUBMITTED by EMPLOYEE] | | |
+Chain Succession[Declaration FINAL_APPROVED by SUPERVISOR, Request Payment] | | |
+Absence[Permit FINAL_APPROVED by DIRECTOR] | |
+Absence[Permit APPROVED by SUPERVISOR] | |
+Chain Succession[Start trip, End trip] | | |
+Alternate Succession[Start trip, Payment Handled] | | |
+Exactly1[Permit SUBMITTED by EMPLOYEE] | |
+Alternate Succession[Start trip, Request Payment] | | |
+Alternate Response[Permit SUBMITTED by EMPLOYEE, Declaration SUBMITTED by EMPLOYEE] | | |
+Alternate Succession[End trip, Payment Handled] | | |
+Alternate Succession[End trip, Request Payment] | | |
+Succession[End trip, Declaration SUBMITTED by EMPLOYEE] | | |
+Alternate Succession[Permit SUBMITTED by EMPLOYEE, Payment Handled] | | |
+Alternate Succession[Permit SUBMITTED by EMPLOYEE, Request Payment] | | |
+Alternate Succession[Start trip, Declaration FINAL_APPROVED by SUPERVISOR] | | |
+Alternate Succession[End trip, Declaration FINAL_APPROVED by SUPERVISOR] | | |
+Exactly1[Permit FINAL_APPROVED by SUPERVISOR] | |
+Alternate Succession[Permit SUBMITTED by EMPLOYEE, End trip] | | |
+Alternate Response[Permit FINAL_APPROVED by SUPERVISOR, Declaration SUBMITTED by EMPLOYEE] | | |
+Init[Permit SUBMITTED by EMPLOYEE] | |
+Alternate Succession[Permit SUBMITTED by EMPLOYEE, Declaration FINAL_APPROVED by SUPERVISOR] | | |
+Alternate Succession[Permit SUBMITTED by EMPLOYEE, Permit FINAL_APPROVED by SUPERVISOR] | | |
+Absence[Declaration REJECTED by ADMINISTRATION] | |
+Alternate Succession[Permit FINAL_APPROVED by SUPERVISOR, Payment Handled] | | |
+Alternate Succession[Permit FINAL_APPROVED by SUPERVISOR, Request Payment] | | |
+Alternate Succession[Permit SUBMITTED by EMPLOYEE, Start trip] | | |
+Alternate Succession[Permit FINAL_APPROVED by SUPERVISOR, Declaration FINAL_APPROVED by SUPERVISOR] | | |
+Exactly1[Declaration SUBMITTED by EMPLOYEE] | |
+Absence[Declaration REJECTED by EMPLOYEE] | |
+Succession[Declaration SUBMITTED by EMPLOYEE, Declaration APPROVED by ADMINISTRATION] | | |
+Chain Precedence[Declaration SUBMITTED by EMPLOYEE, Declaration APPROVED by ADMINISTRATION] | | |
+Exactly1[Declaration APPROVED by ADMINISTRATION] | |
+Alternate Succession[Declaration SUBMITTED by EMPLOYEE, Payment Handled] | | |
+Alternate Succession[Declaration SUBMITTED by EMPLOYEE, Request Payment] | | |
+Alternate Succession[Declaration APPROVED by ADMINISTRATION, Payment Handled] | | |
+Alternate Succession[Declaration APPROVED by ADMINISTRATION, Request Payment] | | |
+Alternate Succession[Declaration SUBMITTED by EMPLOYEE, Declaration FINAL_APPROVED by SUPERVISOR] | | |
+Absence[Permit APPROVED by BUDGET OWNER] | |
+Succession[Permit APPROVED by ADMINISTRATION, Declaration SUBMITTED by EMPLOYEE] | | |
+Alternate Succession[Permit FINAL_APPROVED by SUPERVISOR, End trip] | | |
+Chain Succession[Permit SUBMITTED by EMPLOYEE, Permit APPROVED by ADMINISTRATION] | | |
+Exactly1[Permit APPROVED by ADMINISTRATION] | |
+Alternate Succession[Declaration APPROVED by ADMINISTRATION, Declaration FINAL_APPROVED by SUPERVISOR] | | |
+Absence[Declaration APPROVED by BUDGET OWNER] | |
+Alternate Precedence[Permit SUBMITTED by EMPLOYEE, Declaration SUBMITTED by EMPLOYEE] | | |
+Chain Response[End trip, Declaration SUBMITTED by EMPLOYEE] | | |
+Alternate Response[Permit APPROVED by ADMINISTRATION, Declaration SUBMITTED by EMPLOYEE] | | |
+Alternate Precedence[Permit SUBMITTED by EMPLOYEE, Declaration APPROVED by ADMINISTRATION] | | |
+Alternate Succession[Start trip, Declaration APPROVED by ADMINISTRATION] | | |
+Alternate Precedence[Permit APPROVED by ADMINISTRATION, Payment Handled] | | |
+Alternate Precedence[Permit APPROVED by ADMINISTRATION, Request Payment] | | |

@@ -1,0 +1,43 @@
+activity Request For Payment SUBMITTED by EMPLOYEE
+activity Request For Payment FINAL_APPROVED by SUPERVISOR
+activity Payment Handled
+activity Request Payment
+activity Request For Payment APPROVED by ADMINISTRATION
+activity Request For Payment APPROVED by BUDGET OWNER
+activity Request For Payment REJECTED by EMPLOYEE
+activity Request For Payment REJECTED by ADMINISTRATION
+activity Request For Payment APPROVED by PRE_APPROVER
+activity Request For Payment REJECTED by SUPERVISOR
+activity Request For Payment SAVED by EMPLOYEE
+activity Request For Payment REJECTED by MISSING
+activity Request For Payment REJECTED by PRE_APPROVER
+activity Request For Payment REJECTED by BUDGET OWNER
+activity Request For Payment APPROVED by SUPERVISOR
+activity Request For Payment FINAL_APPROVED by DIRECTOR
+activity Request For Payment FOR_APPROVAL by SUPERVISOR
+activity Request For Payment FINAL_APPROVED by BUDGET OWNER
+activity Request For Payment FOR_APPROVAL by ADMINISTRATION
+Absence[Request For Payment FOR_APPROVAL by SUPERVISOR] | |
+Absence[Request For Payment FOR_APPROVAL by ADMINISTRATION] | |
+Absence[Request For Payment FINAL_APPROVED by BUDGET OWNER] | |
+Absence[Request For Payment APPROVED by SUPERVISOR] | |
+Absence[Request For Payment FINAL_APPROVED by DIRECTOR] | |
+Absence[Request For Payment REJECTED by BUDGET OWNER] | |
+Absence[Request For Payment REJECTED by PRE_APPROVER] | |
+Absence[Request For Payment REJECTED by MISSING] | |
+Init[Request For Payment SUBMITTED by EMPLOYEE] | |
+Absence[Request For Payment SAVED by EMPLOYEE] | |
+Absence[Request For Payment REJECTED by SUPERVISOR] | |
+Absence[Request For Payment APPROVED by PRE_APPROVER] | |
+Exactly1[Payment Handled] | |
+Exactly1[Request Payment] | |
+Chain Succession[Request Payment, Payment Handled] | | |
+Exactly1[Request For Payment FINAL_APPROVED by SUPERVISOR] | |
+Alternate Succession[Request For Payment FINAL_APPROVED by SUPERVISOR, Payment Handled] | | |
+Chain Succession[Request For Payment FINAL_APPROVED by SUPERVISOR, Request Payment] | | |
+Exactly1[Request For Payment SUBMITTED by EMPLOYEE] | |
+Absence[Request For Payment REJECTED by ADMINISTRATION] | |
+Absence[Request For Payment REJECTED by EMPLOYEE] | |
+Alternate Succession[Request For Payment SUBMITTED by EMPLOYEE, Request For Payment FINAL_APPROVED by SUPERVISOR] | | |
+Alternate Succession[Request For Payment SUBMITTED by EMPLOYEE, Payment Handled] | | |
+Alternate Succession[Request For Payment SUBMITTED by EMPLOYEE, Request Payment] | | |
