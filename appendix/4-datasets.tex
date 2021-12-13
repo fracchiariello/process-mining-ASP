@@ -1,0 +1,49 @@
+\section{Dataset Specifications}
+While reference models and synthetic data allows to control variables like the number of constraints and the log size, and so to easily understand the different trends and how the presented approaches scale, a better grasp is also required for the real data in order to understand the effectiveness of such methods. To this end are reported here useful information about the real logs and the relative discovered models. In particular, in table \ref{tab:number_constr} are shown the number of constraints for all the models (with minimum support varying from 60 to 90) of each log and in table \ref{tab:log_specs} are shown information like the size of the logs and the average trace length. 
+
+
+
+\begin{table}[]
+\centering
+\caption{Number models' constraints}
+\label{tab:number_constr}
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+\hline
+   & BPI2012 &   DD &     ID &    PL & PTC &   RP &     RT &    Sepsis \\ 
+\hline
+60 & 25   & 28 & 79 & 101 & 54   & 30 & 13 & 63 \\
+\hline
+70 & 25   & 29 & 73 & 72  & 41   & 30 & 10 & 35 \\
+\hline
+80 & 19   & 22 & 45 & 49 & 33   & 24 & 10 & 19 \\
+\hline
+90 & 11    &  17 & 29 & 37      & 22  &  19 & 10 & 15 \\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{table}[h]
+\centering
+\caption{Logs Specifications}
+\label{tab:log_specs}
+\scalebox{0.6}{
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+\hline
+   & BPI2012 &   DD &     ID &    PL & PTC &   RP &     RT &    Sepsis \\ 
+\hline
+Size & 13087 & 10500 & 6449 & 7065 & 2099 & 6886 & 150370 & 1050 \\
+\hline
+Activities  & 23 & 17 & 34 & 51 & 29 & 19 & 11 & 16\\
+\hline
+Events  & 164506 & 56437 & 72151 & 86581 & 18246 & 36796 & 561470 & 15214 \\
+\hline
+Min. trace len    & 3 & 1 & 3 & 3 & 1 & 1 & 2 & 3 \\
+\hline
+Max trace len     & 96 & 24 & 27 & 90 & 21 & 20 & 20 & 185 \\
+\hline
+Mean trace len    & 13 & 5 & 11 & 12 & 9 & 5 & 4 & 14\\
+\hline
+\end{tabular}
+}
+\end{table}
+

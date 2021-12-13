@@ -1,0 +1,494 @@
+%!TEX root = main.tex
+
+\section{ASP encodings}
+We report three examples of Clingo ASP programs for Log Generation,
+Query Checking and Conformance Checking.
+
+\subsection{Event Log Generation}
+Consider the instance of 
+Log Generation consisting of the set of 
+constraints $\Phi=\{\phi_1,\phi_2\}$, with:
+\begin{enumerate}
+ \item $\phi_1=\always((a1 \land number<5)\limp F a2)$;
+ \item $\phi_2=F (a1 \land number < 3)$.
+\end{enumerate}
+%%
+The automaton for $\phi_1$ is depicted in Fig.~\ref{fig:response},
+where:
+\begin{itemize}
+	\item $\varphi_1=a1 \land number<5$;
+	\item $\varphi_2=a2$;
+	\item $\varphi_3=\lnot \varphi_1$;
+	\item $\varphi_4=\lnot\varphi_2$.
+\end{itemize}
+The automaton for $\phi_2$ is depicted in Fig.~\ref{fig:presence},
+where:
+\begin{itemize}
+	\item $\varphi_1=(a1 \land number < 3)$;
+	\item $\varphi_2=\lnot\varphi_1$;
+	\item $\varphi_3=\true$;
+\end{itemize}
+%%
+\begin{figure}
+	\begin{center}
+		\begin{tikzpicture}
+		    \node[state, initial, accepting] (s0) {$s_0$};
+		    \node[state, right of=s0, xshift=.5cm] (s1) {$s_1$};
+		    \draw
+			(s0) edge[loop above] node{$\varphi_3$} (s0)
+	            	(s0) edge[bend left, above] node{$\varphi_1$} (s1)
+	            	(s1) edge[loop above] node{$\varphi_4$} (s1)
+	            	(s1) edge[bend left, above] node{$\varphi_2$} (s0);
+		\end{tikzpicture}
+	\end{center}
+\caption{Automaton for constraint $\phi_1$.\label{fig:response}}
+\end{figure}
+%%
+\begin{figure}
+	\begin{center}
+		\begin{tikzpicture}
+		    \node[state, initial] (s0) {$s_0$};
+		    \node[state, right of=s0, xshift=.5cm, accepting] (s1) {$s_1$};
+		    \draw
+			(s0) edge[loop above] node{$\varphi_2$} (s0)
+	            	(s0) edge[above] node{$\varphi_1$} (s1)
+	            	(s1) edge[loop above] node{$\varphi_3$} (s1);
+		\end{tikzpicture}
+	\end{center}
+\caption{Automaton for constraint $\phi_2$.\label{fig:presence}}
+\end{figure}
+%%
+For the length of the trace(s) to return, we use the parameter 
+$t$, which can be input provided when Clingo is launched.
+We report the actual code for Clingo below.
+
+\begin{small}
+\begin{aspcode}
+\noindent
+\% PROBLEM INSTANCE\\
+
+\noindent
+\% Command~line-parameters:\\
+\% t:~trace~length\\ 
+(use option -c t=<value> to assign)\\
+
+\noindent
+\% Activities:\\
+activity(a1).
+activity(a2).
+activity(a3).
+activity(a4).
+activity(a5).
+activity(a6).
+activity(a7).
+activity(a8).
+activity(a9).
+activity(10).\\
+
+\noindent
+\% Activity attributes:\\ 
+\% has\_attribute(activity, attribute name)\\
+has\_attribute(a1,categorical).
+has\_attribute(a1,number).\\
+
+\noindent 
+\% Attribute types:\\ 
+\% value(attribute name, allowed value):\\
+value(number,0..100).\\
+value(categorical,c1). 
+value(categorical,c2). 
+value(categorical,c3).\\
+
+\noindent
+\% Automata:\\
+\% Every automaton has associated a unique index\\
+\% initial(automaton index, initial state)\\
+\% accepting(automaton index, accepting state)\\
+\% transition(automaton index, src state, 
+\%~~~~~~~~~~~~~~~~~~~~formula index, dest state).\\
+\% every formula has associated an index and\\
+\% is associated to an automaton\\
+\% (through automaton index)\\
+\% holds(automaton index, formula index,\\
+\%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~trace index)\\
+
+\noindent
+\% phi1=G((a1 and number<5)-> F a2)\\
+initial(1,s0).\\
+accepting(1,s0).\\
+transition(1,s0,1,s1).\\
+holds(1,1,T) :- trace(a1,T),\\ 
+\phantom{holds(1,1,T) :- tra}has\_value(number,V,T), V<5.
+transition(1,s1,2,s0).\\
+holds(1,2,T) :- trace(a2,T).\\
+transition(1,s0,3,s0).\\
+holds(1,3,T) :- not holds(1,1,T), time(T).\\
+transition(1,s1,4,s1).\\
+holds(1,4,T) :- trace(A,T), activity(A), A != a2.\\
+
+\noindent
+\% F a1 and number < 3\\
+initial(2,s0).\\
+accepting(2,s1).\\
+transition(2,s0,1,s0).\\
+holds(2,1,T) :- not holds(2,2,T), time(T).\\
+transition(2,s0,2,s1).\\
+holds(2,2,T) :- trace(a1,T), has\_value(number,V,T), V<3.\\
+transition(2,s1,3,s1).\\
+holds(2,3,T) :- time(T).\\
+
+\noindent
+\% Time points\\
+time(0..t). \\
+
+\noindent
+\% PROBLEM ENCODING\\
+
+\noindent
+\% Exactly one activity per trace position\\ 
+\% (0,...,t-1)\\
+\{trace(A,T) : activity(A)\} = 1 :- time(T), T<t.\\
+
+\noindent
+\% Exactly one assigned value per attribute\\ 
+\% associated with each activity\\
+\{has\_value(K,V,T) : value(K,V)\} = 1 :- trace(A,T), has\_attribute(A,K).\\
+
+\noindent
+\% Initial state\\
+cur\_state(I,S,0) :- initial(I,S).\\
+
+\noindent
+\% Transitions\\
+cur\_state(I,S',T) :- cur\_state(I,S,T-1), transition(I,S,F,S'), holds(I,F,T-1).\\
+
+\noindent
+\% Trace must be accepted by all automata\\
+\% Every automaton must be in at least one\\ 
+\% accepting state at end of run\\
+:- {cur\_state(I,S,T): not accepting(I,S), trace\_length(T)} = 0.\\
+
+\noindent
+\% Show solution\\
+\#show trace/2.\\
+\#show has\_value/3.\\
+\end{aspcode}
+\end{small}
+
+\subsection{Query Checking}
+As explained in the paper, the input of Query Checking 
+includes many traces, each of which is uniquely identified by an index.
+We show the input for the following two traces:
+\begin{itemize}
+	\item $\tau_1=a2()~a1(2,c3)~a2()$;
+	\item $\tau_2=a1(2,c3)~a1(1,c2)~a1(2,c2)~a2()$,
+\end{itemize}
+%%
+where the first attribute of activity $a1$ is named $number$ and the 
+second is named $categorical$. Activity $a2$ does not contain any attribute.
+We remind that since many traces are present, a further index must be added,
+wrt the encoding for Log Generation, to various predicates, in order 
+to indicate the trace that the predicate refers to. We denote such a predicate 
+with the symbol {\asp J}.
+
+As input constraints, we use the following event formulas with 
+activity variables:
+\begin{itemize}
+	\item $\phi_1=\always((?A1 \land number<5) \limp F ?A2)$;
+	\item $\phi_2=F (?A1 \land number < 3)$.
+\end{itemize}
+%%
+The automaton corresponding to $\phi_1$ is depicted in Fig.~\ref{fig:response},
+with: 
+\begin{itemize}
+	\item $\varphi_1=?A1 \land number<5$;
+	\item $\varphi_2=?A2$;
+	\item $\varphi_3=\lnot \varphi_1$;
+	\item $\varphi_4=\lnot\varphi_2$.
+\end{itemize}
+%%
+The automaton corresponding to $\phi_2$ is depicted in Fig.~\ref{fig:presence},
+where:
+\begin{itemize}
+	\item $\varphi_1=(?A1 \land number < 3)$;
+	\item $\varphi_2=\lnot\varphi_1$;
+	\item $\varphi_3=\true$;
+\end{itemize}
+To account for the presence of many traces, predicate 
+{\asp holds}, which models satisfaction of event formulas at
+a given time point, contains an additional parameter representing 
+the trace identifier. This allows to parameterize satisfaction of a 
+formula wrt to the position of the trace.
+
+Finally, as discussed in the paper, each variable $?A$ is 
+modeled in the ASP program with object {\asp varA} in predicate
+{\asp variable}, while the assignment to a variable {\asp varA} is 
+modeled with the binary predicate {\asp assignment(varA,val)}, where 
+{\asp val} is the value assigned to {\asp varA}.
+
+The resulting encoding is shown below.\\
+
+\begin{small}
+\begin{aspcode}
+\noindent
+\% PROBLEM INSTANCE\\
+
+\noindent
+\% traces\\
+\% trace(id,activity,position)\\
+
+\noindent
+\% tau1=a2() a1(2,c3) a2()\\
+trace(1,a2,0).\\
+trace(1,a1,1).\\
+has\_value(1,integer,2,1).\\
+has\_value(1,categorical,c3,1).\\
+trace(1,a2,2).\\
+trace\_length(1,3).\\
+
+\noindent
+\% tau2=a1(2,c3) a1(1,c2) a1(2,c2) a2()\\
+trace(2,a1,0).\\
+has\_value(2,integer,2,0).\\
+has\_value(2,categorical,c3,0).\\
+trace(2,a1,1).\\
+has\_value(2,integer,1,1).\\
+has\_value(2,categorical,c2,1).\\
+trace(2,a1,2).\\
+has\_value(2,integer,1,2).\\
+has\_value(2,categorical,c2,2).\\
+trace(2,a2,3).\\
+trace\_length(2,4).\\
+
+\noindent\% Activities\\
+\% Derived from trace\\
+activity(A) :- trace(\_,A,\_).\\
+
+\noindent
+\% Activity attributes:\\
+\% has\_attribute(activity, attribute name)\\
+has\_attribute(a1,categorical).\\
+has\_attribute(a1,number).\\
+
+\noindent
+\% Attribute types:\\
+\% value(attribute name, allowed value):\\
+value(number,0..100).\\
+value(categorical,c1).\\
+value(categorical,c2).\\
+value(categorical,c3).\\
+
+\noindent
+\% Automata encoding:\\
+\% Almost same as Log Generation\\
+\% differences: holds include trace id)\\
+\% holds(automaton index, formula index,\\ 
+\% \phantom{holds(au} trace id, time point)\\
+
+\noindent
+\% G((?A1 and number<5) -> F ?A2)\\
+variable(varA1).\\
+variable(varA2).\\
+initial(1,s0).\\
+accepting(1,s0).\\
+transition(1,s0,1,s1).\\
+holds(1,1,J,T) :- trace(J,A,T), V<5,\\ 
+\phantom{ho}assignment(varA1,A), has\_value(J,integer,V,T).\\ 
+transition(1,s1,2,s0).\\
+holds(1,2,J,T) :- trace(J,A,T),\\ 
+\phantom{holds(1,2,J,T) :- }assignment(varA2,A).\\
+transition(1,s0,3,s0).\\
+holds(1,3,J,T) :- not holds(1,1,J,T), time(J,T).\\
+transition(1,s1,4,s1).\\
+holds(1,4,J,T) :- not holds(1,2,J,T), time(J,T).\\
+
+\noindent 
+\% F ?A1 and number < 3\\
+initial(2,s0).\\
+accepting(2,s1).\\
+transition(2,s0,1,s0).\\
+holds(2,1,J,T) :- not holds(2,2,J,T), time(J,T).\\ 
+transition(2,s0,2,s1).\\
+holds(2,2,J,T) :- trace(J,A,T), V<3,\\ 
+\phantom{ho}assignment(varA1,A), has\_value(J,integer,V,T).\\
+transition(2,s1,3,s1).\\
+holds(2,3,J,T) :- time(J,T).\\
+
+\noindent
+\%time points\\
+time(J,0..T) :- trace\_length(J,T).\\
+
+\noindent
+\% PROBLEM ENCODING\\
+
+\noindent
+\% exactly one activity per trace point\\
+\{trace(I,A,T) : activity(A)\} = 1 :- time(I,T),\\
+\phantom{\{trace(I,A,T) : }T < L, trace\_length(I,L).\\
+
+\noindent
+\%initial state (J is trace identifier):\\
+cur\_state(I,J,S,0) :- initial(I,S), trace(J,\_,\_).\\
+
+\noindent
+\%transitions (J is trace identifier):
+cur\_state(I,J,S',T) :- cur\_state(I,J,S,T-1),\\
+\phantom{cur\_state}transition(I,S,F,S'), holds(I,F,J,T-1),\\
+\phantom{cur\_state}trace(J,\_,\_).\\
+
+\noindent
+\%exactly one assigned value per attribute\\
+{has\_value(J,K,V,T) : value(K,V)} = 1 :- \\
+\phantom{has\_value}trace(J,A,T), has\_attribute(A,K).\\
+
+\noindent
+\%exactly one assigned value per variable\\
+\{assignment(Var,Val) : activity(Val)\} = 1 :- \\
+\phantom{\{assignment(Var,Val)}variable(Var).\\
+
+\noindent
+:- cur\_state(I,J,S,L), trace\_length(J,L),\\
+\phantom{:- }not accepting(I,S).\\
+
+\noindent
+\% solution\\
+\#show trace/3.\\
+\#show has\_value/4.\\
+\#show assignment/2.
+\end{aspcode}
+\end{small}
+
+\subsection{Conformance Checking}
+As explained in the paper, this is a special case of query checking where 
+the constrains are variable free, i.e., they are fully specified. 
+To obtain the encoding, it is enough to replace the encoding of the automata 
+with one that is fully specified, and remove the predicates related to variables, 
+i.e., {\asp variable} and {\asp assignment}.
+No predicates are returned as solution, as the instance is solved if the 
+specification is satisfiable.
+
+For completeness, we report the full 
+ASP encoding for the set of traces used in the example of Conformance Checking 
+and the constraints (automata) used for Log Generation.\\
+
+\begin{small}
+\begin{aspcode}
+\noindent
+\% PROBLEM INSTANCE\\
+
+\noindent
+\% traces\\
+\% trace(id,activity,position)\\
+
+\noindent
+\% tau1=a2() a1(2,c3) a2()\\
+trace(1,a2,0).\\
+trace(1,a1,1).\\
+has\_value(1,integer,2,1).\\
+has\_value(1,categorical,c3,1).\\
+trace(1,a2,2).\\
+trace\_length(1,3).\\
+
+\noindent
+\% tau2=a1(2,c3) a1(1,c2) a1(2,c2) a2()\\
+trace(2,a1,0).\\
+has\_value(2,integer,2,0).\\
+has\_value(2,categorical,c3,0).\\
+trace(2,a1,1).\\
+has\_value(2,integer,1,1).\\
+has\_value(2,categorical,c2,1).\\
+trace(2,a1,2).\\
+has\_value(2,integer,1,2).\\
+has\_value(2,categorical,c2,2).\\
+trace(2,a2,3).\\
+trace\_length(2,4).\\
+
+\noindent\% Activities\\
+\% Derived from trace\\
+activity(A) :- trace(\_,A,\_).\\
+
+\noindent
+\% Activity attributes:\\
+\% has\_attribute(activity, attribute name)\\
+has\_attribute(a1,categorical).\\
+has\_attribute(a1,number).\\
+
+\noindent
+\% Attribute types:\\
+\% value(attribute name, allowed value):\\
+value(number,0..100).\\
+value(categorical,c1).\\
+value(categorical,c2).\\
+value(categorical,c3).\\
+
+\noindent
+\% Automata encoding:\\
+\% Almost same as Log Generation\\
+\% differences: holds include trace id)\\
+\% holds(automaton index, formula index,\\ 
+\% \phantom{holds(au} trace id, time point)\\
+
+\noindent
+\% G((a1 and number<5) -> F a2)\\
+initial(1,s0).\\
+accepting(1,s0).\\
+transition(1,s0,1,s1).\\
+holds(1,1,J,T) :- trace(J,a1,T), V<5,\\ 
+\phantom{ho}, has\_value(J,integer,V,T).\\ 
+transition(1,s1,2,s0).\\
+holds(1,2,J,T) :- trace(J,a2,T).\\
+transition(1,s0,3,s0).\\
+holds(1,3,J,T) :- not holds(1,1,J,T), time(J,T).\\
+transition(1,s1,4,s1).\\
+holds(1,4,J,T) :- not holds(1,2,J,T), time(J,T).\\
+
+\noindent 
+\% F a1 and number < 3\\
+initial(2,s0).\\
+accepting(2,s1).\\
+transition(2,s0,1,s0).\\
+holds(2,1,J,T) :- not holds(2,2,J,T), time(J,T).\\ 
+transition(2,s0,2,s1).\\
+holds(2,2,J,T) :- trace(J,a1,T), V<3,\\ 
+\phantom{ho}has\_value(J,integer,V,T).\\
+transition(2,s1,3,s1).\\
+holds(2,3,J,T) :- time(J,T).\\
+
+\noindent
+\%time points\\
+time(J,0..T) :- trace\_length(J,T).\\
+
+\noindent
+\% PROBLEM ENCODING\\
+
+\noindent
+\% exactly one activity per trace point\\
+\{trace(I,A,T) : activity(A)\} = 1 :- time(I,T),\\
+\phantom{\{trace(I,A,T) : }T < L, trace\_length(I,L).\\
+
+\noindent
+\%initial state (J is trace identifier):\\
+cur\_state(I,J,S,0) :- initial(I,S), trace(J,\_,\_).\\
+
+\noindent
+\%transitions (J is trace identifier):
+cur\_state(I,J,S',T) :- cur\_state(I,J,S,T-1),\\
+\phantom{cur\_state}transition(I,S,F,S'), holds(I,F,J,T-1),\\
+\phantom{cur\_state}trace(J,\_,\_).\\
+
+\noindent
+\%exactly one assigned value per attribute\\
+{has\_value(J,K,V,T) : value(K,V)} = 1 :- \\
+\phantom{has\_value}trace(J,A,T), has\_attribute(A,K).\\
+
+\noindent
+\%exactly one assigned value per variable\\
+\{assignment(Var,Val) : activity(Val)\} = 1 :- \\
+\phantom{\{assignment(Var,Val)}variable(Var).\\
+
+\noindent
+:- cur\_state(I,J,S,L), trace\_length(J,L),\\
+\phantom{:- }not accepting(I,S).\\
+
+\end{aspcode}
+\end{small}
